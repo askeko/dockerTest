@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-deployment
+  labels:
+    app: application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: application
+  template:
+    metadata:
+      labels:
+        app: application
+    spec:
+      containers:
+        - env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production
+          image: rsenetcompany/fklub:1.0.0
+          imagePullPolicy: IfNotPresent
+          name: application-pod
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
